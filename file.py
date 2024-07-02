@@ -5,11 +5,11 @@ import hashlib
 import bcrypt
 from cryptography.fernet import Fernet
 
-# Securely generate a key for encryption (in practice, store this securely)
+
 key = Fernet.generate_key()
 cipher = Fernet(key)
 
-# Securely hashed password for demonstration purposes
+
 users = {"admin": bcrypt.hashpw("password".encode(), bcrypt.gensalt()).decode()}
 
 class FileSharingApp:
@@ -21,7 +21,7 @@ class FileSharingApp:
         
         self.authenticated = False
         
-        # Create frames
+        
         self.login_frame = ttk.Frame(self.root, padding="10 10 10 10")
         self.main_frame = ttk.Frame(self.root, padding="10 10 10 10")
         
@@ -50,12 +50,12 @@ class FileSharingApp:
         self.status_label = ttk.Label(self.main_frame, text="", foreground="red", font=('Helvetica', 12))
         self.status_label.pack(pady=20)
         
-        # Listbox to display files
+        
         self.file_listbox = tk.Listbox(self.main_frame, font=('Helvetica', 12), height=10, width=50)
         self.file_listbox.pack(pady=10)
         self.file_listbox.configure(borderwidth=2, relief="groove")
         
-        # Scrollbar for listbox
+        
         self.scrollbar = ttk.Scrollbar(self.main_frame, orient="vertical", command=self.file_listbox.yview)
         self.file_listbox.configure(yscrollcommand=self.scrollbar.set)
         self.scrollbar.pack(side="right", fill="y")
