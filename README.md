@@ -2,13 +2,13 @@
 for default: 
 * username - admin
 * password - password
-To run the application following to be installed in your computer
+To run the application following to be installed in your computer - install required packages.
 * python 3
 * pip install bcrypt cryptography
 * sudo apt-get install python3-tk
-pip install bcrypt cryptography
-sudo apt-get update
-sudo apt-get install python3 python3-tk
+* pip install bcrypt cryptography
+* sudo apt-get update
+* sudo apt-get install python3 python3-tk
 ### Project Summary
 user-friendly file-sharing application built using Python and Tkinter. It provides a secure way to upload, download, view, and delete files, with the following key functionalities:
 
