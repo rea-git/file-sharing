@@ -47,6 +47,10 @@ class FileSharingApp:
         tk.Button(self.main_frame, text="Delete File", command=self.delete_file).pack(pady=10)
         self.status_label = tk.Label(self.main_frame, text="", fg="red")
         self.status_label.pack(pady=20)
+        
+        # Listbox to display files
+        self.file_listbox = tk.Listbox(self.main_frame)
+        self.file_listbox.pack(pady=10)
     
     def login(self):
         username = self.username_entry.get()
@@ -75,6 +79,7 @@ class FileSharingApp:
                     file.write(encrypted_data)
                 
                 self.status_label.config(text="File uploaded successfully!", fg="green")
+                self.update_file_list()
             except Exception as e:
                 self.status_label.config(text=f"Error: {str(e)}", fg="red")
     
@@ -82,8 +87,10 @@ class FileSharingApp:
         if not self.authenticated:
             return
         
-        file_path = filedialog.askopenfilename(filetypes=[("Encrypted files", "*.enc")])
-        if file_path:
+        selected_files = self.file_listbox.curselection()
+        if selected_files:
+            file_name = self.file_listbox.get(selected_files[0])
+            file_path = f"server/{file_name}"
             try:
                 with open(file_path, "rb") as file:
                     encrypted_data = file.read()
@@ -102,21 +109,29 @@ class FileSharingApp:
         if not self.authenticated:
             return
         
-        files = os.listdir("server/")
-        file_list = "\n".join(files)
-        messagebox.showinfo("Uploaded Files", file_list)
+        self.update_file_list()
+        self.status_label.config(text="Files listed below.", fg="blue")
     
     def delete_file(self):
         if not self.authenticated:
             return
         
-        file_path = filedialog.askopenfilename(filetypes=[("Encrypted files", "*.enc")])
-        if file_path:
+        selected_files = self.file_listbox.curselection()
+        if selected_files:
+            file_name = self.file_listbox.get(selected_files[0])
+            file_path = f"server/{file_name}"
             try:
                 os.remove(file_path)
                 self.status_label.config(text="File deleted successfully!", fg="green")
+                self.update_file_list()
             except Exception as e:
                 self.status_label.config(text=f"Error: {str(e)}", fg="red")
+    
+    def update_file_list(self):
+        self.file_listbox.delete(0, tk.END)
+        files = os.listdir("server/")
+        for file in files:
+            self.file_listbox.insert(tk.END, file)
 
 if __name__ == "__main__":
     if not os.path.exists("server"):
