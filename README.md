@@ -1,4 +1,7 @@
 # file-sharing
+for default: 
+username - admin
+password - password
 To run the application following to be installed in your computer
 * python 3
 * pip install bcrypt cryptography
